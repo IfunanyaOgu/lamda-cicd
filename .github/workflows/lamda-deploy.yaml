@@ -20,7 +20,7 @@ jobs:
         python-version: '3.14'
 
     - name: Install Dependencies #installs any packages 
-      runs:
+      run: |
         python -m pip install -upgrade pip 
         pip install -r lamda/requirements.txt -t lamda/
     
