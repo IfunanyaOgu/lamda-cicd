@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'lamda/'
+    #paths:
+    #  - 'lamda/'
 
 jobs:
   deploy-lamda: #name of our Job
