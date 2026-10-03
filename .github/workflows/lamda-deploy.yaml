@@ -1,0 +1,39 @@
+
+name: Deplo AWS Lamda
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'lamda/'
+
+jobs:
+  deploy-lamda: #name of our Job
+    runs-on: ubuntu-latest #sets or specifies the runner
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python #sets up our python environment
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.14'
+
+    - name: Install Dependencies #installs any packages 
+      runs:
+        python -m pip install -upgrade pip 
+        pip install -r lamda/requirements.txt -t lamda/
+    
+    - name: Configure AWS Creds #Sets up our AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with: 
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-access-secret-key: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-region: eu-west-2
+
+    - name: Deploy Lamda Function  #Zips lamda directory and updates lamda Function 
+      run: |
+        cd lamda
+        zip -r lamda.zip .
+        aws lamda update-function-code --function-name my-test-cicd-lamda --zip-file fileb://lamda.zip
+ 
