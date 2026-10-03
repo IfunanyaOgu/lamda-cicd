@@ -1,5 +1,5 @@
 
-name: Deplo AWS Lamda
+name: Deplo AWS Lambda
 
 on:
   push:
@@ -35,5 +35,5 @@ jobs:
       run: |
         cd lamda
         zip -r lamda.zip .
-        aws lamda update-function-code --function-name my-test-cicd-lamda --zip-file fileb://lamda.zip
+        aws lambda update-function-code --function-name my-test-cicd-lamda --zip-file fileb://lamda.zip
  
